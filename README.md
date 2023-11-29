@@ -1,0 +1,1 @@
+# intim-anketa-contract
