@@ -1,0 +1,20 @@
+{
+    "name": "sweet0dream/intim-anketa-contract",
+    "description": "Contract items for intim prepare types",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Sweet0dream\\IntimAnketaContract\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "sweet0dream",
+            "email": "sweet0dream@proton.me"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.2"
+    }
+}
