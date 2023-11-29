@@ -11,11 +11,12 @@
     "authors": [
         {
             "name": "sweet0dream",
-            "email": "sweet0dream@proton.me"
+            "email": "sweet0dream@proton.me",
+            "role": "Developer"
         }
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.2"
+        "php": ">=8.2"
     }
 }
