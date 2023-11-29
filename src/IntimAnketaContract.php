@@ -1,6 +1,6 @@
 <?php
 
-namespace Sweet0dream\IntimAnketaContract;
+namespace Sweet0dream;
 
 class IntimAnketaContract {
 
