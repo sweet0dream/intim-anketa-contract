@@ -173,7 +173,7 @@ class IntimAnketaContract {
                 ]
             ];
         }
-        return false;
+        return $result;
     }
 
 }
