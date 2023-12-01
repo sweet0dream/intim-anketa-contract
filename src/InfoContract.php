@@ -13,12 +13,6 @@ class InfoContract {
         $this->type = $type;
     }
 
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-        return $this;
-    }
-
     private function formatNum(int $number, array $suffix): string
     {
         $keys = [2, 0, 1, 1, 1, 2];
