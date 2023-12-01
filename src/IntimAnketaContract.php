@@ -12,10 +12,69 @@ class IntimAnketaContract {
         return $number . ' ' . $suffix[$suffix_key];
     }
     
-    public function getField($key): array
+    public function getField(string $key): array
     {
-        $result['info'] = $this->getInfoField($key);
-        $result['service'] = [
+        return [
+            'info' => $this->getInfo($key),
+            'service' => $this->getService(),
+            'price' => $this->getPrice($key),
+            'dop' => [
+                'text' => ['name' => 'Дополнительно о себе', 'type' => 'textarea', 'require' => 1]
+            ]
+        ];
+    }
+
+    private function getInfo(string $key): ?array
+    {
+        if ($key == 'ind') {
+            $result = [
+                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
+                'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
+                'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
+                'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
+                'chest' => ['name' => 'Грудь', 'type' => 'select', 'require' => 1, 'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']],
+                'hair' => ['name' => 'Волосы', 'type' => 'select', 'require' => 1, 'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']]
+            ];
+        }
+
+        if ($key == 'sal') {
+            $result = [
+                'name' => ['name' => 'Название салона', 'type' => 'text', 'require' => 1],
+            ];
+        }
+
+        if ($key == 'man') {
+            $result = [
+                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
+                'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
+                'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
+                'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
+                'dick' => ['name' => 'Член', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(10,30))],
+                'body' => ['name' => 'Тело', 'type' => 'select', 'require' => 1, 'value' => ['Худощавое', 'Обычное', 'Спортивное', 'Плотное']],
+                'serv' => ['name' => 'Услуги', 'type' => 'select', 'require' => 1, 'value' => ['Для женщин', 'Для мужчин', 'Для всех']],
+                'role' => ['name' => 'Роль', 'type' => 'select', 'require' => 1, 'value' => ['Активный', 'Пассивный', 'Универсал']]
+            ];
+        }
+
+        if ($key == 'tsl') {
+            $result = [
+                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
+                'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
+                'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
+                'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
+                'chest' => ['name' => 'Грудь', 'type' => 'select', 'require' => 1, 'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']],
+                'dick' => ['name' => 'Член', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(10,30))],
+                'role' => ['name' => 'Роль', 'type' => 'select', 'require' => 1, 'value' => ['Активный', 'Пассивный', 'Универсал']],
+                'hair' => ['name' => 'Волосы', 'type' => 'select', 'require' => 1, 'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']]
+            ];
+        }
+
+        return $result ?? null;
+    }
+
+    private function getService(): array
+    {
+        return [
             'sex' => [
                 'name' => 'Секс',
                 'value' => [
@@ -89,98 +148,41 @@ class IntimAnketaContract {
                 ]
             ]
         ];
-
-        $result['dop'] = [
-            'text' => ['name' => 'Дополнительно о себе', 'type' => 'textarea', 'require' => 1]
-        ];
-
-        if ($key == 'ind') {
-            $result = [
-                'price' => [
-                    'express' => ['name' => 'Экспресс', 'type' => 'text'],
-                    'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                    'twohour' => ['name' => 'Два часа', 'type' => 'text'],
-                    'night' => ['name' => 'Ночь', 'type' => 'text']
-                ]
-            ];
-        }
-
-        if ($key == 'sal') {
-            $result = [
-                'price' => [
-                    'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                    'night' => ['name' => 'Ночь', 'type' => 'text']
-                ]
-            ];
-        }
-
-        if ($key == 'man') {
-            $result = [
-                'price' => [
-                    'express' => ['name' => 'Экспресс', 'type' => 'text'],
-                    'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                    'twohour' => ['name' => 'Два часа', 'type' => 'text'],
-                    'night' => ['name' => 'Ночь', 'type' => 'text']
-                ]
-            ];
-        }
-
-        if ($key == 'tsl') {
-            $result = [
-                'price' => [
-                    'express' => ['name' => 'Экспресс', 'type' => 'text'],
-                    'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                    'twohour' => ['name' => 'Два часа', 'type' => 'text'],
-                    'night' => ['name' => 'Ночь', 'type' => 'text']
-                ]
-            ];
-        }
-
-        return $result;
     }
 
-    private function getInfoField(string $key): ?array
+    private function getPrice(string $key): ?array
     {
         if ($key == 'ind') {
             $result = [
-                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
-                'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
-                'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
-                'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
-                'chest' => ['name' => 'Грудь', 'type' => 'select', 'require' => 1, 'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']],
-                'hair' => ['name' => 'Волосы', 'type' => 'select', 'require' => 1, 'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']]
+                'express' => ['name' => 'Экспресс', 'type' => 'text'],
+                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
+                'twohour' => ['name' => 'Два часа', 'type' => 'text'],
+                'night' => ['name' => 'Ночь', 'type' => 'text']
             ];
         }
 
         if ($key == 'sal') {
             $result = [
-                'name' => ['name' => 'Название салона', 'type' => 'text', 'require' => 1],
+                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
+                'night' => ['name' => 'Ночь', 'type' => 'text']
             ];
         }
 
         if ($key == 'man') {
             $result = [
-                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
-                'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
-                'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
-                'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
-                'dick' => ['name' => 'Член', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(10,30))],
-                'body' => ['name' => 'Тело', 'type' => 'select', 'require' => 1, 'value' => ['Худощавое', 'Обычное', 'Спортивное', 'Плотное']],
-                'serv' => ['name' => 'Услуги', 'type' => 'select', 'require' => 1, 'value' => ['Для женщин', 'Для мужчин', 'Для всех']],
-                'role' => ['name' => 'Роль', 'type' => 'select', 'require' => 1, 'value' => ['Активный', 'Пассивный', 'Универсал']]
+                'express' => ['name' => 'Экспресс', 'type' => 'text'],
+                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
+                'twohour' => ['name' => 'Два часа', 'type' => 'text'],
+                'night' => ['name' => 'Ночь', 'type' => 'text']
             ];
         }
 
         if ($key == 'tsl') {
             $result = [
-                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
-                'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
-                'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
-                'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
-                'chest' => ['name' => 'Грудь', 'type' => 'select', 'require' => 1, 'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']],
-                'dick' => ['name' => 'Член', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(10,30))],
-                'role' => ['name' => 'Роль', 'type' => 'select', 'require' => 1, 'value' => ['Активный', 'Пассивный', 'Универсал']],
-                'hair' => ['name' => 'Волосы', 'type' => 'select', 'require' => 1, 'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']]
+                'express' => ['name' => 'Экспресс', 'type' => 'text'],
+                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
+                'twohour' => ['name' => 'Два часа', 'type' => 'text'],
+                'night' => ['name' => 'Ночь', 'type' => 'text']
             ];
         }
 
