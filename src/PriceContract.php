@@ -12,6 +12,12 @@ class PriceContract {
         $this->type = $type;
     }
 
+    public function setType(string $type): static
+    {
+        $this->type = $type;
+        return $this;
+    }
+
     public function getData(): ?array
     {
         if ($this->type == 'ind') {
