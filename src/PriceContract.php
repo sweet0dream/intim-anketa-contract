@@ -2,7 +2,23 @@
 
 namespace Sweet0dream;
 
-class PriceContract {
+class PriceContract extends AbstractContract {
+
+    const EXPRESS = ['express', 'Экспресс'];
+    const ONEHOUR = ['onehour', 'Один час'];
+    const TWOHOUR = ['twohour', 'Два часа'];
+    const NIGHT = ['night', 'Ночь'];
+
+    const REQUIRE = [
+        self::ONEHOUR
+    ];
+
+    const PRICE = [
+        self::EXPRESS,
+        self::ONEHOUR,
+        self::TWOHOUR,
+        self::NIGHT
+    ];
 
     private string $type;
 
@@ -14,38 +30,15 @@ class PriceContract {
 
     public function getData(): ?array
     {
-        if ($this->type == 'ind') {
-            $result = [
-                'express' => ['name' => 'Экспресс', 'type' => 'text'],
-                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                'twohour' => ['name' => 'Два часа', 'type' => 'text'],
-                'night' => ['name' => 'Ночь', 'type' => 'text']
-            ];
-        }
-
-        if ($this->type == 'sal') {
-            $result = [
-                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                'night' => ['name' => 'Ночь', 'type' => 'text']
-            ];
-        }
-
-        if ($this->type == 'man') {
-            $result = [
-                'express' => ['name' => 'Экспресс', 'type' => 'text'],
-                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                'twohour' => ['name' => 'Два часа', 'type' => 'text'],
-                'night' => ['name' => 'Ночь', 'type' => 'text']
-            ];
-        }
-
-        if ($this->type == 'tsl') {
-            $result = [
-                'express' => ['name' => 'Экспресс', 'type' => 'text'],
-                'onehour' => ['name' => 'Один час', 'type' => 'text', 'require' => 1],
-                'twohour' => ['name' => 'Два часа', 'type' => 'text'],
-                'night' => ['name' => 'Ночь', 'type' => 'text']
-            ];
+        $result = [];
+        foreach (self::PRICE as $priceValue) {
+            $result[$priceValue[0]] = $this->getFieldEntity(
+                $priceValue[0],
+                $priceValue[1],
+                'text',
+                in_array($priceValue, self::REQUIRE),
+                null
+            );
         }
 
         return $result ?? null;
