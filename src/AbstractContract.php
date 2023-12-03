@@ -12,7 +12,7 @@ abstract class AbstractContract
         return $number . ' ' . $suffix[$suffix_key];
     }
 
-    public function getField(
+    public function getFieldEntity(
         string $key,
         string $name,
         string $type,

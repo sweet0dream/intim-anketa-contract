@@ -25,22 +25,22 @@ class InfoContract extends AbstractContract {
     {
         if ($this->type == 'ind') {
             $result = [
-                'name' => $this->getField(
+                'name' => $this->getFieldEntity(
                     'name',
-                    'Имя/Псевдоним111',
+                    '2331Имя/Псевдоним111',
                     'text',
                     true,
                     null
                 ),
-                'year' => $this->getField(
+                'year' => $this->getFieldEntity(
                     'year',
                     'Возраст',
                     'select',
                     true,
                     range(18,60),
-                    ['год', 'года', 'лет']
+                    ['год1', 'года1', 'лет1']
                 ),
-                'height' => $this->getField(
+                'height' => $this->getFieldEntity(
                     'height',
                     'Рост',
                     'select',
@@ -48,7 +48,7 @@ class InfoContract extends AbstractContract {
                     range(120,210),
                     'см.'
                 ),
-                'weight' => $this->getField(
+                'weight' => $this->getFieldEntity(
                     'weight',
                     'Вес',
                     'select',
@@ -56,14 +56,14 @@ class InfoContract extends AbstractContract {
                     range(30,200),
                     'кг.'
                 ),
-                'chest' => $this->getField(
+                'chest' => $this->getFieldEntity(
                     'chest',
                     'Грудь',
                     'select',
                     true,
                     ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']
                 ),
-                'hair' => $this->getField(
+                'hair' => $this->getFieldEntity(
                     'hair',
                     'Волосы',
                     'select',
