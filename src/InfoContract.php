@@ -27,7 +27,7 @@ class InfoContract extends AbstractContract {
             $result = [
                 'name' => $this->getField(
                     'name',
-                    'Имя/Псевдоним',
+                    'Имя/Псевдоним111',
                     'text',
                     true,
                     null
