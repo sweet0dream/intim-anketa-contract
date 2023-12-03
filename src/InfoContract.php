@@ -27,7 +27,7 @@ class InfoContract extends AbstractContract {
             $result = [
                 'name' => $this->getFieldEntity(
                     'name',
-                    '2331Имя/Псевдоним111',
+                    'Имя/Псевдоним',
                     'text',
                     true,
                     null
@@ -38,7 +38,7 @@ class InfoContract extends AbstractContract {
                     'select',
                     true,
                     range(18,60),
-                    ['год1', 'года1', 'лет1']
+                    ['год', 'года', 'лет']
                 ),
                 'height' => $this->getFieldEntity(
                     'height',
