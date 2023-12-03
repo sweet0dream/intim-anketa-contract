@@ -25,8 +25,10 @@ abstract class AbstractContract
             'key' => $key,
             'name' => $name,
             'type' => $type,
-            'require' => (int)$require
         ];
+        if ($require) {
+            $result['require'] = (int)$require;
+        }
         if ($suffix) {
             $result['value'] = array_map(
                 function ($a) use ($suffix)
