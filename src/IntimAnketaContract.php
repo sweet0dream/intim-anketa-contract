@@ -1,7 +1,7 @@
 <?php
 
 namespace Sweet0dream;
-use Sweet0dream\InfoContract;
+use Sweet0dream\AbstractContract;
 use Sweet0dream\ServiceContract;
 use Sweet0dream\PriceContract;
 

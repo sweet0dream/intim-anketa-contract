@@ -2,7 +2,7 @@
 
 namespace Sweet0dream;
 
-class InfoContract {
+class InfoContract extends AbstractContract {
 
     private string $type;
 
@@ -25,12 +25,57 @@ class InfoContract {
     {
         if ($this->type == 'ind') {
             $result = [
-                'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
+                /*'name' => ['name' => 'Имя/Псевдоним', 'type' => 'text', 'require' => 1],
                 'year' => ['name' => 'Возраст', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $this->formatNum($a, ['год', 'года', 'лет']);}, range(18,60))],
                 'height' => ['name' => 'Рост', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' см';}, range(120,210))],
                 'weight' => ['name' => 'Вес', 'type' => 'select', 'require' => 1, 'value' => array_map(function($a){return $a.' кг';}, range(30,200))],
                 'chest' => ['name' => 'Грудь', 'type' => 'select', 'require' => 1, 'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']],
-                'hair' => ['name' => 'Волосы', 'type' => 'select', 'require' => 1, 'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']]
+                'hair' => ['name' => 'Волосы', 'type' => 'select', 'require' => 1, 'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']]*/
+                'name' => $this->getField(
+                    'name',
+                    'Имя/Псевдоним',
+                    'text',
+                    true,
+                    null
+                ),
+                'year' => $this->getField(
+                    'year',
+                    'Возраст',
+                    'select',
+                    true,
+                    range(18,60),
+                    ['год', 'года', 'лет']
+                ),
+                'height' => $this->getField(
+                    'height',
+                    'Рост',
+                    'select',
+                    true,
+                    range(120,210),
+                    'см.'
+                ),
+                'weight' => $this->getField(
+                    'weight',
+                    'Вес',
+                    'select',
+                    true,
+                    range(30,200),
+                    'кг.'
+                ),
+                'chest' => $this->getField(
+                    'chest',
+                    'Грудь',
+                    'select',
+                    true,
+                    ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']
+                ),
+                'hair' => $this->getField(
+                    'hair',
+                    'Волосы',
+                    'select',
+                    true,
+                    ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']
+                ),
             ];
         }
 
