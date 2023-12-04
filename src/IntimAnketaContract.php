@@ -12,6 +12,13 @@ class IntimAnketaContract {
     const TYPE_MAN = 'man';
     const TYPE_TSL = 'tsl';
 
+    const TYPE = [
+        self::TYPE_IND,
+        self::TYPE_SAL,
+        self::TYPE_MAN,
+        self::TYPE_TSL
+    ];
+
     private string $type;
 
     public function __construct(
