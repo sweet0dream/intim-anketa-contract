@@ -134,7 +134,7 @@ class InfoContract extends AbstractContract {
                 $result[] = $this->getFieldEntity(
                     $infoField['key'],
                     $infoField['name'],
-                    is_array($infoField['value']) ? 'select' : 'text',
+                    isset($value) ? 'select' : 'text',
                     1,
                     $value ?? null,
                     $infoField['suffix'] ?? false
