@@ -39,9 +39,9 @@ class PriceContract extends AbstractContract {
     {
         $result = [];
         foreach (self::PRICE as $priceValue) {
-            /*if (self::EXCLUDE_FIELD[$this->type] && in_array($priceValue, self::EXCLUDE_FIELD[$this->type])) {
+            if (isset(self::EXCLUDE_FIELD[$this->type]) && in_array($priceValue, self::EXCLUDE_FIELD[$this->type])) {
                 continue;
-            }*/
+            }
             $result[$priceValue[0]] = $this->getFieldEntity(
                 $priceValue[0],
                 $priceValue[1],
