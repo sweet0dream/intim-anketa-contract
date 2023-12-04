@@ -20,6 +20,13 @@ class PriceContract extends AbstractContract {
         self::NIGHT
     ];
 
+    const EXCLUDE_FIELD = [
+        'sal' => [
+            self::EXPRESS,
+            self::TWOHOUR
+        ]
+    ];
+
     private string $type;
 
     public function __construct(
@@ -32,6 +39,9 @@ class PriceContract extends AbstractContract {
     {
         $result = [];
         foreach (self::PRICE as $priceValue) {
+            if (in_array($priceValue, self::EXCLUDE_FIELD[$this->type])) {
+                continue;
+            }
             $result[$priceValue[0]] = $this->getFieldEntity(
                 $priceValue[0],
                 $priceValue[1],

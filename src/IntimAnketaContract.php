@@ -7,6 +7,13 @@ use Sweet0dream\PriceContract;
 
 class IntimAnketaContract {
 
+    const TYPE = [
+        'ind',
+        'sal',
+        'man',
+        'tsl'
+    ];
+
     private string $type;
 
     public function __construct(
@@ -20,14 +27,14 @@ class IntimAnketaContract {
         'text' => ['name' => 'Дополнительно о себе', 'type' => 'textarea', 'require' => 1]
     ];
     
-    public function getField(): array
+    public function getField(): ?array
     {
-        return [
+        return in_array($this->type, self::TYPE) ? [
             'info' => (new InfoContract($this->type))->getData(),
             'service' => (new ServiceContract())->getData(),
             'price' => (new PriceContract($this->type))->getData(),
             'dop' => self::FIELD_DOP
-        ];
+        ] : null;
     }
 
 }
