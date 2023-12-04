@@ -4,6 +4,115 @@ namespace Sweet0dream;
 
 class InfoContract extends AbstractContract {
 
+    const NAME = [
+        'key' => 'name',
+        'name' => 'Имя/Псевдоним'
+    ];
+
+    const YEAR = [
+        'key' => 'year',
+        'name' => 'Возраст',
+        'value' => [
+            'start' => 18,
+            'end' => 60
+        ],
+        'suffix' => ['год', 'года', 'лет']
+    ];
+
+    const HEIGHT = [
+        'key' => 'height',
+        'name' => 'Рост',
+        'value' => [
+            'start' => 120,
+            'end' => 210
+        ],
+        'suffix' => 'см.'
+    ];
+
+    const WEIGHT = [
+        'key' => 'weight',
+        'name' => 'Вес',
+        'value' => [
+            'start' => 30,
+            'end' => 200
+        ],
+        'suffix' => 'кг.'
+    ];
+
+    const CHEST = [
+        'key' => 'chest',
+        'name' => 'Грудь',
+        'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']
+    ];
+
+    const HAIR = [
+        'key' => 'hair',
+        'name' => 'Грудь',
+        'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']
+    ];
+
+    const DICK = [
+        'key' => 'dick',
+        'name' => 'Член',
+        'value' => [
+            'start' => 10,
+            'end' => 30
+        ],
+        'suffix' => 'см.'
+    ];
+
+    const BODY = [
+        'key' => 'body',
+        'name' => 'Телосложение',
+        'value' => ['Худощавое', 'Обычное', 'Спортивное', 'Плотное']
+    ];
+
+    const SERV = [
+        'key' => 'serv',
+        'name' => 'Услуги',
+        'value' => ['Для женщин', 'Для мужчин', 'Для всех']
+    ];
+
+    const ROLE = [
+        'key' => 'role',
+        'name' => 'Роль',
+        'value' => ['Активный', 'Пассивный', 'Универсал']
+    ];
+
+    const INFO = [
+        IntimAnketaContract::TYPE_IND => [
+            self::NAME,
+            self::YEAR,
+            self::HEIGHT,
+            self::WEIGHT,
+            self::CHEST,
+            self::HAIR
+        ],
+        IntimAnketaContract::TYPE_SAL => [
+            self::NAME
+        ],
+        IntimAnketaContract::TYPE_MAN => [
+            self::NAME,
+            self::YEAR,
+            self::HEIGHT,
+            self::WEIGHT,
+            self::DICK,
+            self::BODY,
+            self::SERV,
+            self::ROLE
+        ],
+        IntimAnketaContract::TYPE_TSL => [
+            self::NAME,
+            self::YEAR,
+            self::HEIGHT,
+            self::WEIGHT,
+            self::CHEST,
+            self::DICK,
+            self::ROLE,
+            self::HAIR
+        ],
+    ];
+
     private string $type;
 
     public function __construct(
@@ -15,198 +124,23 @@ class InfoContract extends AbstractContract {
 
     public function getData(): ?array
     {
-        if ($this->type == 'ind') {
-            $result = [
-                'name' => $this->getFieldEntity(
-                    'name',
-                    'Имя/Псевдоним',
-                    'text',
-                    true,
-                    null
-                ),
-                'year' => $this->getFieldEntity(
-                    'year',
-                    'Возраст',
-                    'select',
-                    true,
-                    range(18,60),
-                    ['год', 'года', 'лет']
-                ),
-                'height' => $this->getFieldEntity(
-                    'height',
-                    'Рост',
-                    'select',
-                    true,
-                    range(120,210),
-                    'см.'
-                ),
-                'weight' => $this->getFieldEntity(
-                    'weight',
-                    'Вес',
-                    'select',
-                    true,
-                    range(30,200),
-                    'кг.'
-                ),
-                'chest' => $this->getFieldEntity(
-                    'chest',
-                    'Грудь',
-                    'select',
-                    true,
-                    ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']
-                ),
-                'hair' => $this->getFieldEntity(
-                    'hair',
-                    'Волосы',
-                    'select',
-                    true,
-                    ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']
-                )
-            ];
+        if (isset(self::INFO[$this->type])) {
+            foreach (self::INFO[$this->type] as $infoField) {
+                if ($infoField['suffix']) {
+                    $value = range($infoField['value']['start'], $infoField['value']['end']);
+                } else {
+                    $value = $infoField['value'];
+                }
+                $result[] = $this->getFieldEntity(
+                    $infoField['key'],
+                    $infoField['name'],
+                    is_array($infoField['value']) ? 'select' : 'text',
+                    1,
+                    $value ?? null,
+                    $infoField['suffix'] ?? false
+                );
+            }
         }
-
-        if ($this->type == 'sal') {
-            $result = [
-                'name' => $this->getFieldEntity(
-                    'name',
-                    'Название салона',
-                    'text',
-                    true,
-                    null
-                )
-            ];
-        }
-
-        if ($this->type == 'man') {
-            $result = [
-                'name' => $this->getFieldEntity(
-                    'name',
-                    'Имя/Псевдоним',
-                    'text',
-                    true,
-                    null
-                ),
-                'year' => $this->getFieldEntity(
-                    'year',
-                    'Возраст',
-                    'select',
-                    true,
-                    range(18,60),
-                    ['год', 'года', 'лет']
-                ),
-                'height' => $this->getFieldEntity(
-                    'height',
-                    'Рост',
-                    'select',
-                    true,
-                    range(120,210),
-                    'см.'
-                ),
-                'weight' => $this->getFieldEntity(
-                    'weight',
-                    'Вес',
-                    'select',
-                    true,
-                    range(30,200),
-                    'кг.'
-                ),
-                'dick' => $this->getFieldEntity(
-                    'dick',
-                    'Член',
-                    'select',
-                    true,
-                    range(10,30),
-                    'см.'
-                ),
-                'body' => $this->getFieldEntity(
-                    'body',
-                    'Член',
-                    'select',
-                    true,
-                    ['Худощавое', 'Обычное', 'Спортивное', 'Плотное']
-                ),
-                'serv' => $this->getFieldEntity(
-                    'serv',
-                    'Услуги',
-                    'select',
-                    true,
-                    ['Для женщин', 'Для мужчин', 'Для всех']
-                ),
-                'role' => $this->getFieldEntity(
-                    'role',
-                    'Роль',
-                    'select',
-                    true,
-                    ['Активный', 'Пассивный', 'Универсал']
-                )
-            ];
-        }
-
-        if ($this->type == 'tsl') {
-            $result = [
-                'name' => $this->getFieldEntity(
-                    'name',
-                    'Имя/Псевдоним',
-                    'text',
-                    true,
-                    null
-                ),
-                'year' => $this->getFieldEntity(
-                    'year',
-                    'Возраст',
-                    'select',
-                    true,
-                    range(18,60),
-                    ['год', 'года', 'лет']
-                ),
-                'height' => $this->getFieldEntity(
-                    'height',
-                    'Рост',
-                    'select',
-                    true,
-                    range(120,210),
-                    'см.'
-                ),
-                'weight' => $this->getFieldEntity(
-                    'weight',
-                    'Вес',
-                    'select',
-                    true,
-                    range(30,200),
-                    'кг.'
-                ),
-                'chest' => $this->getFieldEntity(
-                    'chest',
-                    'Грудь',
-                    'select',
-                    true,
-                    ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']
-                ),
-                'dick' => $this->getFieldEntity(
-                    'dick',
-                    'Член',
-                    'select',
-                    true,
-                    range(10,30),
-                    'см.'
-                ),
-                'role' => $this->getFieldEntity(
-                    'role',
-                    'Роль',
-                    'select',
-                    true,
-                    ['Активный', 'Пассивный', 'Универсал']
-                ),
-                'hair' => $this->getFieldEntity(
-                    'hair',
-                    'Волосы',
-                    'select',
-                    true,
-                    ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']
-                )
-            ];
-        }
-
         return $result ?? null;
     }
 

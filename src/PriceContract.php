@@ -21,7 +21,7 @@ class PriceContract extends AbstractContract {
     ];
 
     const EXCLUDE_FIELD = [
-        'sal' => [
+        IntimAnketaContract::TYPE_SAL => [
             self::EXPRESS,
             self::TWOHOUR
         ]

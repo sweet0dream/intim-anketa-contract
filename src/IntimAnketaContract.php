@@ -7,12 +7,10 @@ use Sweet0dream\PriceContract;
 
 class IntimAnketaContract {
 
-    const TYPE = [
-        'ind',
-        'sal',
-        'man',
-        'tsl'
-    ];
+    const TYPE_IND = 'ind';
+    const TYPE_SAL = 'sal';
+    const TYPE_MAN = 'man';
+    const TYPE_TSL = 'tsl';
 
     private string $type;
 
