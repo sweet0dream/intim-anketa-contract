@@ -128,7 +128,7 @@ class InfoContract extends AbstractContract {
             foreach (self::INFO[$this->type] as $infoField) {
                 if (isset($infoField['suffix'])) {
                     $value = range($infoField['value']['start'], $infoField['value']['end']);
-                } else {
+                } elseif(isset($infoField['value'])) {
                     $value = $infoField['value'];
                 }
                 $result[] = $this->getFieldEntity(
