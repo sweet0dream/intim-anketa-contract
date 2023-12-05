@@ -2,14 +2,14 @@
 
 Install: ```composer req sweet0dream/intim-anketa-contract```
 
-###Available types in Contract:
+### Available types in Contract:
 
 1. ind -> Type: individualki
 2. sal -> Type: intimsalony
 3. man -> Type: muzhskoi-eskort
 4. tsl -> Type: transseksualki
 
-###Use:
+### Use:
 
 Check namespace
 
