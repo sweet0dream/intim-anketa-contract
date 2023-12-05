@@ -132,16 +132,14 @@ class InfoContract extends AbstractContract {
                         $value = range($value['start'], $value['end']);
                     }
                 }
-                $result[] = [
-                    $infoField['key'] => $this->getFieldEntity(
-                        $infoField['key'],
-                        $infoField['name'],
-                        isset($value) ? 'select' : 'text',
-                        1,
-                        $value ?? null,
-                        $infoField['suffix'] ?? false
-                    )
-                ];
+                $result[$infoField['key']] = $this->getFieldEntity(
+                    $infoField['key'],
+                    $infoField['name'],
+                    isset($value) ? 'select' : 'text',
+                    1,
+                    $value ?? null,
+                    $infoField['suffix'] ?? false
+                );
             }
         }
         return $result ?? null;
