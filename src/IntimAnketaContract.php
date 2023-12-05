@@ -44,7 +44,7 @@ class IntimAnketaContract {
 
     public function toJson(): false|string
     {
-        return json_encode($this->getField());
+        return json_encode($this->getField(), JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
     }
 
 }
