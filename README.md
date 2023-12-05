@@ -18,3 +18,9 @@ Check namespace
 Get all fields for checked type
 
 ```(new IntimAnketaContract({TYPE}))->getField()```
+
+> return data as array
+
+```(new IntimAnketaContract({TYPE}))->toJson()```
+
+> return data as JSON object
