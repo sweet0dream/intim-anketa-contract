@@ -17,4 +17,4 @@ Check namespace
 
 Get all fields for checked type
 
-```new (new IntimAnketaContract({TYPE}))->getField()```
+```(new IntimAnketaContract({TYPE}))->getField()```

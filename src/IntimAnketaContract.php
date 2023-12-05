@@ -42,4 +42,9 @@ class IntimAnketaContract {
         ] : null;
     }
 
+    public function toJson(): false|string
+    {
+        return json_encode($this->getField());
+    }
+
 }
