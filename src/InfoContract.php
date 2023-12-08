@@ -47,7 +47,7 @@ class InfoContract extends AbstractContract {
 
     const HAIR = [
         'key' => 'hair',
-        'name' => 'Грудь',
+        'name' => 'Волосы',
         'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Лысая']
     ];
 
