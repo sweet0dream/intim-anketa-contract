@@ -19,6 +19,17 @@ class IntimAnketaContract {
         self::TYPE_TSL
     ];
 
+    const META = [
+        ['Индивидуалки', 'Индивидуалки'],
+        ['Салон', 'Салоны'],
+        ['Мужчина по вызову', 'Мужской эскорт'],
+        ['Транссексуалка', 'Трансы']
+    ];
+
+    private const FIELD_DOP = [
+        'text' => ['name' => 'Дополнительно о себе', 'type' => 'textarea', 'require' => 1]
+    ];
+
     private string $type;
 
     public function __construct(
@@ -28,10 +39,6 @@ class IntimAnketaContract {
         $this->type = $type;
     }
 
-    private const FIELD_DOP = [
-        'text' => ['name' => 'Дополнительно о себе', 'type' => 'textarea', 'require' => 1]
-    ];
-    
     public function getField(): ?array
     {
         return in_array($this->type, self::TYPE) ? [
@@ -45,6 +52,16 @@ class IntimAnketaContract {
     public function toJson(): false|string
     {
         return json_encode($this->getField(), JSON_NUMERIC_CHECK|JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+    }
+
+    public function getSingularMeta(): array
+    {
+        return array_combine(self::TYPE, array_map(fn($meta) => $meta[0], self::META));
+    }
+
+    public function getPluralMeta(): array
+    {
+        return array_combine(self::TYPE, array_map(fn($meta) => $meta[1], self::META));
     }
 
 }
