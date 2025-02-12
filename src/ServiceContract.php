@@ -2,95 +2,62 @@
 
 namespace Sweet0dream;
 
+use Sweet0dream\Enum\Service\{
+    SexServiceEnum,
+    MinServiceEnum,
+    OkoServiceEnum,
+    MasServiceEnum,
+    SadServiceEnum,
+    ZreServiceEnum,
+    OraServiceEnum,
+    IzvServiceEnum,
+    ProServiceEnum
+};
+
 class ServiceContract {
     private const SERVICE_SEX = [
         'name' => 'Секс',
-        'value' => [
-            'sk' => 'классический',
-            'sa' => 'анальный',
-            'sg' => 'групповой',
-            'sl' => 'лесбийский'
-        ]
+        'value' => SexServiceEnum::class
     ];
 
     private const SERVICE_MIN = [
         'name' => 'Минет',
-        'value' => [
-            'mp' => 'в презервативе',
-            'mb' => 'без презерватива',
-            'mg' => 'глубокий',
-            'ma' => 'в авто'
-        ]
+        'value' => MinServiceEnum::class
     ];
 
     private const SERVICE_OKO = [
         'name' => 'Окончание',
-        'value' => [
-            'og' => 'на грудь',
-            'ol' => 'на лицо',
-            'or' => 'в рот',
-            'op' => 'в попу'
-        ]
+        'value' => OkoServiceEnum::class
     ];
 
     private const SERVICE_MAS = [
         'name' => 'Массаж',
-        'value' => [
-            'mk' => 'классический',
-            'mp' => 'профессиональный',
-            'me' => 'эротический',
-            'mu' => 'урологический'
-        ]
+        'value' => MasServiceEnum::class
     ];
 
     private const SERVICE_SAD = [
         'name' => 'БДСМ',
-        'value' => [
-            'sp' => 'порка',
-            'ss' => 'страпон',
-            'sr' => 'госпожа/рабыня',
-            'st' => 'трамплинг'
-        ]
+        'value' => SadServiceEnum::class
     ];
 
     private const SERVICE_ZRE = [
         'name' => 'Зрелища',
-        'value' => [
-            'zl' => 'легкое лесби',
-            'zo' => 'откровенное лесби',
-            'zs' => 'стриптиз',
-            'zi' => 'игрушки'
-        ]
+        'value' => ZreServiceEnum::class
     ];
 
     private const SERVICE_ORA = [
         'name' => 'Оральные',
-        'value' => [
-            'ok' => 'кунилингус',
-            'oa' => 'анилингус',
-            'op' => 'поза 69',
-            'of' => 'футлизинг'
-        ]
+        'value' => OraServiceEnum::class
     ];
 
     private const SERVICE_IZV = [
         'name' => 'Извращения',
-        'value' => [
-            'iz' => 'золотой дождь',
-            'ik' => 'копро',
-            'if' => 'фистинг',
-            'ia' => 'фистинг анал'
-        ]
+        'value' => IzvServiceEnum::class
     ];
 
     private const SERVICE_PRO = [
         'name' => 'Прочее',
-        'value' => [
-            'pe' => 'эскорт',
-            'ps' => 'с семейной парой',
-            'pf' => 'фото съемка',
-            'pv' => 'видео съемка'
-        ]
+        'value' => ProServiceEnum::class
     ];
 
     private const SERVICE = [
@@ -107,6 +74,13 @@ class ServiceContract {
 
     public function getData(): array
     {
-        return self::SERVICE;
+        return array_map(fn($v) => [
+            'name' => $v['name'],
+            'value' => array_column(
+                $v['value']::cases(),
+                'value',
+                'name'
+            )
+        ],self::SERVICE);
     }
 }
