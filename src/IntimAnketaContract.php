@@ -64,4 +64,14 @@ class IntimAnketaContract {
         return array_combine(self::TYPE, array_map(fn($meta) => $meta[1], self::META));
     }
 
+    public function getSingularTypeName(): string
+    {
+        return $this->getSingularMeta()[$this->type];
+    }
+
+    public function getPluralTypeName(): string
+    {
+        return $this->getPluralMeta()[$this->type];
+    }
+
 }
