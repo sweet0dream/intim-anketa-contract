@@ -1,7 +1,7 @@
 {
     "name": "sweet0dream/intim-anketa-contract",
     "description": "Contract items for intim prepare types",
-    "version": "0.3",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "autoload": {
