@@ -24,7 +24,12 @@ class PriceContract extends AbstractContract {
         IntimAnketaContract::TYPE_SAL => [
             self::EXPRESS,
             self::TWOHOUR
-        ]
+        ],
+        IntimAnketaContract::TYPE_MAS => [
+            self::TWOHOUR,
+            self::NIGHT
+        ],
+
     ];
 
     private string $type;
