@@ -72,6 +72,17 @@ class ServiceContract {
         'pro' => self::SERVICE_PRO
     ];
 
+    private const MAS_SERVICE = [
+        'mas' => self::SERVICE_MAS,
+        'min' => self::SERVICE_MIN,
+        'oko' => self::SERVICE_OKO
+    ];
+
+    public function __construct(
+        private string $type
+    ) {
+    }
+
     public function getData(): array
     {
         return array_map(fn($v) => [
@@ -81,6 +92,9 @@ class ServiceContract {
                 'value',
                 'name'
             )
-        ],self::SERVICE);
+        ], match ($this->type) {
+            IntimAnketaContract::TYPE_MAS => self::MAS_SERVICE,
+            default => self::SERVICE
+        });
     }
 }

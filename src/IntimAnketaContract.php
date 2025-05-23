@@ -11,19 +11,22 @@ class IntimAnketaContract {
     const TYPE_SAL = 'sal';
     const TYPE_MAN = 'man';
     const TYPE_TSL = 'tsl';
+    const TYPE_MAS = 'mas';
 
     const TYPE = [
         self::TYPE_IND,
         self::TYPE_SAL,
         self::TYPE_MAN,
-        self::TYPE_TSL
+        self::TYPE_TSL,
+        self::TYPE_MAS,
     ];
 
     const META = [
         ['Индивидуалка', 'Индивидуалки'],
         ['Салон', 'Салоны'],
         ['Мужчина по вызову', 'Мужской эскорт'],
-        ['Транссексуалка', 'Трансы']
+        ['Транссексуалка', 'Трансы'],
+        ['Эромассаж', 'Эротический массаж']
     ];
 
     private const FIELD_DOP = [
@@ -43,7 +46,7 @@ class IntimAnketaContract {
     {
         return in_array($this->type, self::TYPE) ? [
             'info' => (new InfoContract($this->type))->getData(),
-            'service' => (new ServiceContract())->getData(),
+            'service' => (new ServiceContract($this->type))->getData(),
             'price' => (new PriceContract($this->type))->getData(),
             'dop' => self::FIELD_DOP
         ] : null;

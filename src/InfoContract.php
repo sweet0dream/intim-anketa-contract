@@ -79,6 +79,12 @@ class InfoContract extends AbstractContract {
         'value' => ['Активный', 'Пассивный', 'Универсал']
     ];
 
+    const INTIM = [
+        'key' => 'intim',
+        'name' => 'Интим',
+        'value' => ['По договоренности', 'Да', 'Нет']
+    ];
+
     const INFO = [
         IntimAnketaContract::TYPE_IND => [
             self::NAME,
@@ -111,6 +117,14 @@ class InfoContract extends AbstractContract {
             self::ROLE,
             self::HAIR
         ],
+        IntimAnketaContract::TYPE_MAS => [
+            self::NAME,
+            self::YEAR,
+            self::HEIGHT,
+            self::WEIGHT,
+            self::SERV,
+            self::INTIM
+        ]
     ];
 
     private string $type;
