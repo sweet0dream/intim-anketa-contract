@@ -8,6 +8,7 @@ Install: ```composer req sweet0dream/intim-anketa-contract```
 2. sal -> Type: intimsalony
 3. man -> Type: muzhskoi-eskort
 4. tsl -> Type: transseksualki
+5. mas -> Type: eromassazh
 
 ### Use:
 
