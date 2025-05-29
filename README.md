@@ -25,3 +25,19 @@ Get all fields for checked type
 ```(new IntimAnketaContract({TYPE}))->toJson()```
 
 > return data as JSON object
+
+```(new IntimAnketaContract({TYPE}))->getSingularMeta()```
+
+> return array all supported types in singular word mode
+
+```(new IntimAnketaContract({TYPE}))->getPluralMeta()```
+
+> return array all supported types in plural word mode
+
+```(new IntimAnketaContract({TYPE}))->getSingularTypeName()```
+
+> return string selected type in singular mode word
+
+```(new IntimAnketaContract({TYPE}))->getPluralTypeName()```
+
+> return string selected type in plural mode word
