@@ -2,92 +2,80 @@
 
 namespace Sweet0dream;
 
+use Sweet0dream\Enum\Info\BodyInfoEnum;
+use Sweet0dream\Enum\Info\ChestInfoEnum;
+use Sweet0dream\Enum\Info\DickInfoEnum;
+use Sweet0dream\Enum\Info\HairInfoEnum;
+use Sweet0dream\Enum\Info\HeightInfoEnum;
+use Sweet0dream\Enum\Info\IntimInfoEnum;
+use Sweet0dream\Enum\Info\RoleInfoEnum;
+use Sweet0dream\Enum\Info\ServInfoEnum;
+use Sweet0dream\Enum\Info\WeightInfoEnum;
+use Sweet0dream\Enum\Info\YearInfoEnum;
+
 class InfoContract extends AbstractContract {
-
-    const NAME = [
-        'key' => 'name',
-        'name' => 'Имя/Псевдоним'
-    ];
-
     const YEAR = [
         'key' => 'year',
         'name' => 'Возраст',
-        'value' => [
-            'start' => 18,
-            'end' => 60
-        ],
-        'suffix' => ['год', 'года', 'лет']
+        'value' => YearInfoEnum::class
     ];
 
     const HEIGHT = [
         'key' => 'height',
         'name' => 'Рост',
-        'value' => [
-            'start' => 120,
-            'end' => 210
-        ],
-        'suffix' => 'см.'
+        'value' => HeightInfoEnum::class
     ];
 
     const WEIGHT = [
         'key' => 'weight',
         'name' => 'Вес',
-        'value' => [
-            'start' => 30,
-            'end' => 200
-        ],
-        'suffix' => 'кг.'
+        'value' => WeightInfoEnum::class
     ];
 
     const CHEST = [
         'key' => 'chest',
         'name' => 'Грудь',
-        'value' => ['Менее 1-го', '1-ый размер', '2-ой размер', '3-ий размер', '4-ый размер', '5-ый размер', '6-ой размер', 'Более 6-го']
+        'value' => ChestInfoEnum::class
     ];
 
     const HAIR = [
         'key' => 'hair',
         'name' => 'Волосы',
-        'value' => ['Блондинка', 'Брюнетка', 'Шатенка', 'Рыжая', 'Русая', 'Лысая']
+        'value' => HairInfoEnum::class
     ];
 
     const DICK = [
         'key' => 'dick',
         'name' => 'Член',
-        'value' => [
-            'start' => 10,
-            'end' => 30
-        ],
-        'suffix' => 'см.'
+        'value' => DickInfoEnum::class
     ];
 
     const BODY = [
         'key' => 'body',
         'name' => 'Телосложение',
-        'value' => ['Худощавое', 'Обычное', 'Спортивное', 'Плотное']
+        'value' => BodyInfoEnum::class
     ];
 
     const SERV = [
         'key' => 'serv',
         'name' => 'Услуги',
-        'value' => ['Для женщин', 'Для мужчин', 'Для всех']
+        'value' => ServInfoEnum::class
     ];
 
     const ROLE = [
         'key' => 'role',
         'name' => 'Роль',
-        'value' => ['Активный', 'Пассивный', 'Универсал']
+        'value' => RoleInfoEnum::class
     ];
 
     const INTIM = [
         'key' => 'intim',
         'name' => 'Интим',
-        'value' => ['По договоренности', 'Да', 'Нет']
+        'value' => IntimInfoEnum::class
     ];
 
     const INFO = [
         IntimAnketaContract::TYPE_IND => [
-            self::NAME,
             self::YEAR,
             self::HEIGHT,
             self::WEIGHT,
@@ -95,10 +83,8 @@ class InfoContract extends AbstractContract {
             self::HAIR
         ],
         IntimAnketaContract::TYPE_SAL => [
-            self::NAME
         ],
         IntimAnketaContract::TYPE_MAN => [
-            self::NAME,
             self::YEAR,
             self::HEIGHT,
             self::WEIGHT,
@@ -108,7 +94,6 @@ class InfoContract extends AbstractContract {
             self::ROLE
         ],
         IntimAnketaContract::TYPE_TSL => [
-            self::NAME,
             self::YEAR,
             self::HEIGHT,
             self::WEIGHT,
@@ -118,7 +103,6 @@ class InfoContract extends AbstractContract {
             self::HAIR
         ],
         IntimAnketaContract::TYPE_MAS => [
-            self::NAME,
             self::YEAR,
             self::HEIGHT,
             self::WEIGHT,
@@ -140,23 +124,15 @@ class InfoContract extends AbstractContract {
     {
         if (isset(self::INFO[$this->type])) {
             foreach (self::INFO[$this->type] as $infoField) {
-                if(isset($infoField['value'])) {
-                    $value = $infoField['value'];
-                    if (isset($infoField['suffix'])) {
-                        $value = range($value['start'], $value['end']);
-                    }
-                }
                 $result[$infoField['key']] = $this->getFieldEntity(
-                    $infoField['key'],
-                    $infoField['name'],
-                    isset($value) ? 'select' : 'text',
-                    1,
-                    $value ?? null,
-                    $infoField['suffix'] ?? false
+                    key: $infoField['key'],
+                    name: $infoField['name'],
+                    type: 'select',
+                    require: 1,
+                    value: array_map(fn($v) => $v->value, $infoField['value']::cases())
                 );
             }
         }
         return $result ?? null;
     }
-
 }

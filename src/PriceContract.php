@@ -48,11 +48,10 @@ class PriceContract extends AbstractContract {
                 continue;
             }
             $result[$priceValue[0]] = $this->getFieldEntity(
-                $priceValue[0],
-                $priceValue[1],
-                'text',
-                in_array($priceValue, self::REQUIRE),
-                null
+                key: $priceValue[0],
+                name: $priceValue[1],
+                type: 'text',
+                require: in_array($priceValue, self::REQUIRE)
             );
         }
 
