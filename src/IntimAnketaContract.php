@@ -1,50 +1,37 @@
 <?php
 
 namespace Sweet0dream;
-use Sweet0dream\AbstractContract;
-use Sweet0dream\ServiceContract;
-use Sweet0dream\PriceContract;
+use Exception;
+use Sweet0dream\Enum\Meta\{
+    SingularMetaEnum,
+    PluralMetaEnum
+};
+use Sweet0dream\Enum\TypeEnum;
 
-class IntimAnketaContract {
-
-    const TYPE_IND = 'ind';
-    const TYPE_SAL = 'sal';
-    const TYPE_MAN = 'man';
-    const TYPE_TSL = 'tsl';
-    const TYPE_MAS = 'mas';
-
-    const TYPE = [
-        self::TYPE_IND,
-        self::TYPE_SAL,
-        self::TYPE_MAN,
-        self::TYPE_TSL,
-        self::TYPE_MAS,
-    ];
-
-    const META = [
-        ['Индивидуалка', 'Индивидуалки'],
-        ['Салон', 'Салоны'],
-        ['Мужчина по вызову', 'Мужской эскорт'],
-        ['Транссексуалка', 'Трансы'],
-        ['Эромассаж', 'Эротический массаж']
-    ];
-
+class IntimAnketaContract
+{
     private const FIELD_DOP = [
         'text' => ['name' => 'Дополнительно о себе', 'type' => 'textarea', 'require' => 1]
     ];
 
-    private string $type;
+    private TypeEnum $type;
 
-    public function __construct(
-        string $type
-    )
-    {
+    /**
+     * @throws Exception
+     */
+    public function __construct(string $value) {
+        $type = TypeEnum::tryFrom($value);
+
+        if (is_null($type)) {
+            throw new Exception('No available type in contract');
+        }
+
         $this->type = $type;
     }
 
     public function getField(): ?array
     {
-        return in_array($this->type, self::TYPE) ? [
+        return in_array($this->type->value, TypeEnum::getTypes()) ? [
             'info' => (new InfoContract($this->type))->getData(),
             'service' => (new ServiceContract($this->type))->getData(),
             'price' => (new PriceContract($this->type))->getData(),
@@ -59,22 +46,21 @@ class IntimAnketaContract {
 
     public function getSingularMeta(): array
     {
-        return array_combine(self::TYPE, array_map(fn($meta) => $meta[0], self::META));
+        return array_combine(TypeEnum::getTypes(), array_column(SingularMetaEnum::cases(), 'value'));
     }
 
     public function getPluralMeta(): array
     {
-        return array_combine(self::TYPE, array_map(fn($meta) => $meta[1], self::META));
+        return array_combine(TypeEnum::getTypes(), array_column(PluralMetaEnum::cases(), 'value'));
     }
 
     public function getSingularTypeName(): string
     {
-        return $this->getSingularMeta()[$this->type];
+        return $this->getSingularMeta()[$this->type->value];
     }
 
     public function getPluralTypeName(): string
     {
-        return $this->getPluralMeta()[$this->type];
+        return $this->getPluralMeta()[$this->type->value];
     }
-
 }

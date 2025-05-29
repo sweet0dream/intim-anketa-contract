@@ -2,18 +2,22 @@
 
 namespace Sweet0dream;
 
-use Sweet0dream\Enum\Info\BodyInfoEnum;
-use Sweet0dream\Enum\Info\ChestInfoEnum;
-use Sweet0dream\Enum\Info\DickInfoEnum;
-use Sweet0dream\Enum\Info\HairInfoEnum;
-use Sweet0dream\Enum\Info\HeightInfoEnum;
-use Sweet0dream\Enum\Info\IntimInfoEnum;
-use Sweet0dream\Enum\Info\RoleInfoEnum;
-use Sweet0dream\Enum\Info\ServInfoEnum;
-use Sweet0dream\Enum\Info\WeightInfoEnum;
-use Sweet0dream\Enum\Info\YearInfoEnum;
+use Sweet0dream\Enum\TypeEnum;
+use Sweet0dream\Enum\Info\{
+    BodyInfoEnum,
+    ChestInfoEnum,
+    DickInfoEnum,
+    HairInfoEnum,
+    HeightInfoEnum,
+    IntimInfoEnum,
+    RoleInfoEnum,
+    ServInfoEnum,
+    WeightInfoEnum,
+    YearInfoEnum
+};
 
-class InfoContract extends AbstractContract {
+class InfoContract extends AbstractContract
+{
     const YEAR = [
         'key' => 'year',
         'name' => 'Возраст',
@@ -74,65 +78,65 @@ class InfoContract extends AbstractContract {
         'value' => IntimInfoEnum::class
     ];
 
-    const INFO = [
-        IntimAnketaContract::TYPE_IND => [
-            self::YEAR,
-            self::HEIGHT,
-            self::WEIGHT,
-            self::CHEST,
-            self::HAIR
-        ],
-        IntimAnketaContract::TYPE_SAL => [
-        ],
-        IntimAnketaContract::TYPE_MAN => [
-            self::YEAR,
-            self::HEIGHT,
-            self::WEIGHT,
-            self::DICK,
-            self::BODY,
-            self::SERV,
-            self::ROLE
-        ],
-        IntimAnketaContract::TYPE_TSL => [
-            self::YEAR,
-            self::HEIGHT,
-            self::WEIGHT,
-            self::CHEST,
-            self::DICK,
-            self::ROLE,
-            self::HAIR
-        ],
-        IntimAnketaContract::TYPE_MAS => [
-            self::YEAR,
-            self::HEIGHT,
-            self::WEIGHT,
-            self::SERV,
-            self::INTIM
-        ]
+    const INFO_IND = [
+        self::YEAR,
+        self::HEIGHT,
+        self::WEIGHT,
+        self::CHEST,
+        self::HAIR
+    ];
+    const INFO_SAL = [];
+    const INFO_MAN = [
+        self::YEAR,
+        self::HEIGHT,
+        self::WEIGHT,
+        self::DICK,
+        self::BODY,
+        self::SERV,
+        self::ROLE
+    ];
+    const INFO_TSL = [
+        self::YEAR,
+        self::HEIGHT,
+        self::WEIGHT,
+        self::CHEST,
+        self::DICK,
+        self::ROLE,
+        self::HAIR
+    ];
+    const INFO_MAS = [
+        self::YEAR,
+        self::HEIGHT,
+        self::WEIGHT,
+        self::SERV,
+        self::INTIM
     ];
 
-    private string $type;
-
     public function __construct(
-        string $type
-    )
-    {
-        $this->type = $type;
+        private readonly TypeEnum $type,
+    ) {
     }
 
     public function getData(): ?array
     {
-        if (isset(self::INFO[$this->type])) {
-            foreach (self::INFO[$this->type] as $infoField) {
-                $result[$infoField['key']] = $this->getFieldEntity(
-                    key: $infoField['key'],
-                    name: $infoField['name'],
-                    type: 'select',
-                    require: 1,
-                    value: array_map(fn($v) => $v->value, $infoField['value']::cases())
-                );
-            }
+        $infoFields = match ($this->type) {
+            TypeEnum::ind => self::INFO_IND,
+            TypeEnum::sal => self::INFO_SAL,
+            TypeEnum::man => self::INFO_MAN,
+            TypeEnum::tsl => self::INFO_TSL,
+            TypeEnum::mas => self::INFO_MAS,
+        };
+
+        foreach ($infoFields as $infoField) {
+            $result[$infoField['key']] = $this->getFieldEntity(
+                key: $infoField['key'],
+                name: $infoField['name'],
+                type: 'select',
+                require: 1,
+                value: array_column($infoField['value']::cases(), 'value')
+            );
         }
+
         return $result ?? null;
     }
 }

@@ -13,8 +13,10 @@ use Sweet0dream\Enum\Service\{
     IzvServiceEnum,
     ProServiceEnum
 };
+use Sweet0dream\Enum\TypeEnum;
 
-class ServiceContract {
+class ServiceContract
+{
     private const SERVICE_SEX = [
         'name' => 'Секс',
         'value' => SexServiceEnum::class
@@ -79,7 +81,7 @@ class ServiceContract {
     ];
 
     public function __construct(
-        private string $type
+        private readonly TypeEnum $type,
     ) {
     }
 
@@ -93,7 +95,7 @@ class ServiceContract {
                 'name'
             )
         ], match ($this->type) {
-            IntimAnketaContract::TYPE_MAS => self::MAS_SERVICE,
+            TypeEnum::mas => self::MAS_SERVICE,
             default => self::SERVICE
         });
     }

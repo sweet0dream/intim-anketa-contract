@@ -2,7 +2,10 @@
 
 namespace Sweet0dream;
 
-class PriceContract extends AbstractContract {
+use Sweet0dream\Enum\TypeEnum;
+
+class PriceContract extends AbstractContract
+{
 
     const EXPRESS = ['express', 'Экспресс'];
     const ONEHOUR = ['onehour', 'Один час'];
@@ -21,30 +24,27 @@ class PriceContract extends AbstractContract {
     ];
 
     const EXCLUDE_FIELD = [
-        IntimAnketaContract::TYPE_SAL => [
+        TypeEnum::sal->value => [
             self::EXPRESS,
             self::TWOHOUR
         ],
-        IntimAnketaContract::TYPE_MAS => [
+        TypeEnum::mas->value => [
             self::TWOHOUR,
             self::NIGHT
         ],
 
     ];
 
-    private string $type;
-
     public function __construct(
-        string $type
+        private readonly TypeEnum $type,
     ) {
-        $this->type = $type;
     }
 
     public function getData(): ?array
     {
         $result = [];
         foreach (self::PRICE as $priceValue) {
-            if (isset(self::EXCLUDE_FIELD[$this->type]) && in_array($priceValue, self::EXCLUDE_FIELD[$this->type])) {
+            if (isset(self::EXCLUDE_FIELD[$this->type->value]) && in_array($priceValue, self::EXCLUDE_FIELD[$this->type->value])) {
                 continue;
             }
             $result[$priceValue[0]] = $this->getFieldEntity(
