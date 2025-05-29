@@ -5,7 +5,6 @@ namespace Sweet0dream;
 abstract class AbstractContract
 {
     public function getFieldEntity(
-        string $key,
         string $name,
         string $type,
         bool $require = false,
@@ -13,7 +12,6 @@ abstract class AbstractContract
     ): array
     {
         $result = [
-            'key' => $key,
             'name' => $name,
             'type' => $type,
         ];

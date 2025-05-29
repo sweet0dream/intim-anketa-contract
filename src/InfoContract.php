@@ -129,7 +129,6 @@ class InfoContract extends AbstractContract
 
         foreach ($infoFields as $infoField) {
             $result[$infoField['key']] = $this->getFieldEntity(
-                key: $infoField['key'],
                 name: $infoField['name'],
                 type: 'select',
                 require: 1,
