@@ -6,15 +6,11 @@ abstract class AbstractContract
 {
     public function getFieldEntity(
         string $name,
-        string $type,
         bool $require = false,
         ?array $value = null,
     ): array
     {
-        $result = [
-            'name' => $name,
-            'type' => $type,
-        ];
+        $result['name'] = $name;
         if ($require) {
             $result = array_merge($result, ['require' => 1]);
         }
