@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sweet0dream;
 
 use Sweet0dream\Enum\Service\{
@@ -89,7 +91,7 @@ class ServiceContract
     {
         return array_map(fn($v) => [
             'name' => $v['name'],
-            'value' => array_column(
+            'values' => array_column(
                 $v['value']::cases(),
                 'value',
                 'name'

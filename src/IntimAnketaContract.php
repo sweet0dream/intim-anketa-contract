@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sweet0dream;
 use Exception;
 use Sweet0dream\Enum\Meta\{
@@ -32,6 +34,7 @@ class IntimAnketaContract
     public function getField(): ?array
     {
         return in_array($this->type->value, TypeEnum::getTypes()) ? [
+            'work' => (new WorkContract())->getData(),
             'info' => (new InfoContract($this->type))->getData(),
             'service' => (new ServiceContract($this->type))->getData(),
             'price' => (new PriceContract($this->type))->getData(),

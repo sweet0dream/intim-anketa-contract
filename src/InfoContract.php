@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sweet0dream;
 
 use Sweet0dream\Enum\TypeEnum;
-use Sweet0dream\Enum\Info\{
+use Sweet0dream\Enum\Info\{AparInfoEnum,
     BodyInfoEnum,
     ChestInfoEnum,
     DickInfoEnum,
@@ -13,8 +15,7 @@ use Sweet0dream\Enum\Info\{
     RoleInfoEnum,
     ServInfoEnum,
     WeightInfoEnum,
-    YearInfoEnum
-};
+    YearInfoEnum};
 
 class InfoContract extends AbstractContract
 {
@@ -78,6 +79,12 @@ class InfoContract extends AbstractContract
         'value' => IntimInfoEnum::class
     ];
 
+    const APAR = [
+        'key' => 'apar',
+        'name' => 'Прием клиентов',
+        'value' => AparInfoEnum::class
+    ];
+
     const INFO_IND = [
         self::YEAR,
         self::HEIGHT,
@@ -85,7 +92,9 @@ class InfoContract extends AbstractContract
         self::CHEST,
         self::HAIR
     ];
-    const INFO_SAL = [];
+    const INFO_SAL = [
+        self::APAR
+    ];
     const INFO_MAN = [
         self::YEAR,
         self::HEIGHT,
@@ -130,7 +139,7 @@ class InfoContract extends AbstractContract
         foreach ($infoFields as $infoField) {
             $result[$infoField['key']] = $this->getFieldEntity(
                 name: $infoField['name'],
-                require: 1,
+                require: true,
                 value: array_column($infoField['value']::cases(), 'value'),
             );
         }

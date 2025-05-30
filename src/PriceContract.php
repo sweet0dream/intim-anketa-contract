@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sweet0dream;
 
 use Sweet0dream\Enum\TypeEnum;
